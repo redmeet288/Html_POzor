@@ -39,19 +39,21 @@ $(document).ready(function() {
     let openCard = [];
     let gameLocked = false;
 
-
+function f(){
     $('.buttons').on('click', function() {
         $('.card').toggleClass('flipped open');
 
         $(this).text($(this).text() === 'Start' ? 'Reset' : 'Start');
     });
+}
+    f();
 
 
     if($('.buttons')){
         $('.card').on('click', function() {
             if (openCard.length >= 2 || gameLocked)return;
             let count = 0;
-
+            $('.buttons').off('click');
             $(this).toggleClass('flipped');
             let cardAlt = $(this).find('img').attr('alt');
             openCard.push({element: this, alt: cardAlt});
@@ -77,6 +79,7 @@ $(document).ready(function() {
                     gameLocked = false;
                     if(count === 10){
                         alert("ты выйграл")
+                        f();
                     }
                 }
             }
