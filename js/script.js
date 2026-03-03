@@ -1,53 +1,56 @@
 $(document).ready(function() {
-
-
     const images = [
-        { front: 'image/brane.jfif', back: 'image/карта.jpg', alt: 'мозг' },
-        { front: 'image/сер.jfif', back: 'image/карта.jpg', alt: 'че' },
+        { front: 'image/images.png', back: 'image/карта.jpg', alt: 'мозг' },
+        { front: 'image/images.jfif', back: 'image/карта.jpg', alt: 'че' },
+        { front: 'image/images (1).jfif', back: 'image/карта.jpg', alt: 'не' },
+        { front: 'image/480_480_2_botinki.jpg', back: 'image/карта.jpg', alt: 'ботинки' },
     ];
 
-    let cardHtml = '';
-    let usedAlts = []; 
-
-    for (let i = 0; i < 10; i++) {
+    let pairs = [];
+    for (let i = 0; i < 5; i++) {
         let randomImage = images[Math.floor(Math.random() * images.length)];
-        
-        if (i % 2 === 0) {
-            usedAlts.push(randomImage.alt);
-        }
-        
+        pairs.push(randomImage);  
+        pairs.push(randomImage);  
+    }
+
+    for (let i = pairs.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+    }
+
+    let cardHtml = '';
+    pairs.forEach((imageData) => {
         cardHtml += `
             <div class="card">
                 <div class="card-inner">
                     <div class="card-front">
-                        <img src="${randomImage.front}" alt="${randomImage.alt}">
+                        <img src="${imageData.front}" alt="${imageData.alt}">
                     </div>
                     <div class="card-back">
-                        <img src="${randomImage.back}" alt="${randomImage.alt}">
+                        <img src="${imageData.back}" alt="${imageData.alt}">
                     </div>
                 </div>
             </div>
         `;
-    }
+    });
 
     $('.card-grid').html(cardHtml);
 
-
     let openCard = [];
     let gameLocked = false;
-    var count = 0
 
 
     $('.buttons').on('click', function() {
         $('.card').toggleClass('flipped open');
+
         $(this).text($(this).text() === 'Start' ? 'Reset' : 'Start');
     });
 
 
-    console.log($('.buttons').text);
     if($('.buttons')){
         $('.card').on('click', function() {
             if (openCard.length >= 2 || gameLocked)return;
+            let count = 0;
 
             $(this).toggleClass('flipped');
             let cardAlt = $(this).find('img').attr('alt');
