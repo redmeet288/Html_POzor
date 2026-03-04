@@ -95,16 +95,16 @@ function f(){
                     gameLocked = false;
                     if(count === 10){
                         alert("ты выйграл")
-                        record.push(count_pop);
+                        // record.push(count_pop);
 
-                        $('.span1').text(Math.min(...record));
+                        // $('.span1').text(Math.min(...record));
 
                         f();
                     }
                 }
 
 
-                $('.spans').text(count_pop);
+                // $('.spans').text(count_pop);
 
             }
         });
